@@ -5,10 +5,10 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// API proxy - must come before static files
-app.use(createProxyMiddleware('/api', {
+app.use(createProxyMiddleware({
   target: 'http://39.106.98.184',
   changeOrigin: true,
+  pathFilter: '/api',
   on: { error: (err, req, res) => res.status(502).json({ error: 'Backend unreachable' }) }
 }));
 
